@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
+Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
+    Route::get('/', 'HomeController@index');
+    Route::resource('article', 'ArticleController');
+});
 
-Route::get('admin', 'TestController@index');
+//Route::get('admin', 'TestController@index');
